@@ -1,0 +1,6 @@
+<?php
+
+/**
+ * @file sharer_toolbar.module
+ * Hooks implementations and code logic related to Sharer Toolbar module
+ */
