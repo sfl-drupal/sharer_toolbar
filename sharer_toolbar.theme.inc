@@ -20,7 +20,7 @@ function theme_sharer_toolbar_config_form($variables) {
     t('Weight'),
   );
 
-  // Render form rows as table rows
+  // Render form rows as draggable table rows
   $rows = array();
   foreach (element_children($form['sharers']) as $sid) {
     $form['sharers'][$sid]['weight']['#attributes']['class'] = array('sharers-order-weight');
