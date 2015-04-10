@@ -20,3 +20,9 @@ msgstr "Configurer la barre de partage"
 
 msgid "Sharer toolbar configuration has been saved."
 msgstr "La configuration de la barre de partage a été sauvegardée."
+
+msgid "Sharer toolbar configuration has been saved."
+msgstr "La configuration de la barre de partage a été sauvegardée."
+
+msgid "Icon class"
+msgstr "Classe de l'icône"

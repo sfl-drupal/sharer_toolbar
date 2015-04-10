@@ -62,6 +62,7 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'sid' => 'facebook',
       'name' => 'Facebook',
       'icon_class' => 'icon-facebook',
+      'url' => 'https://www.facebook.com/sharer/sharer.php?u=[:shared_url:]',
     ),
 
     // Twitter sharer
@@ -69,6 +70,15 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'sid' => 'twitter',
       'name' => 'Twitter',
       'icon_class' => 'icon-twitter',
+      'url' => 'https://twitter.com/home?status=[:shared_message:]',
+    ),
+
+    // Google Plus sharer
+    'googleplus' => array(
+      'sid' => 'googleplus',
+      'name' => 'Google +',
+      'icon_class' => 'icon-googleplus',
+      'url' => 'https://plus.google.com/share?url=[:shared_url:]',
     ),
 
     // Twitter sharer
@@ -76,13 +86,48 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'sid' => 'linkedin',
       'name' => 'LinkedIn',
       'icon_class' => 'icon-linkedin',
+      'url' => 'https://www.linkedin.com/shareArticle?mini=true&url=[:shared_url:]&title=[:shared_title:]&summary=[:shared_summary:]&source=[:shared_source:]',
     ),
 
-    // Email sharer
-    'email' => array(
-      'sid' => 'email',
-      'name' => 'Email',
-      'icon_class' => 'icon-email',
-    ),
+    // // Email sharer
+    // 'email' => array(
+    //   'sid' => 'email',
+    //   'name' => 'Email',
+    //   'icon_class' => 'icon-email',
+    // ),
   );
+}
+
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function sharer_toolbar_preprocess_node(&$variables) {
+  module_load_include('inc', 'sharer_toolbar');
+  $sharing_buttons = array();
+  // dd($variables);
+
+  // Get all active and available sharers
+  $active_sharers = variable_get('sharer_toolbar_sharers_configuration', array());
+  $available_sharers = _sharer_toolbar_get_available_sharers();
+
+  // Generate button if sharer is active
+  foreach ($active_sharers as $sid => &$sharer) {
+    if ($sharer['status']) {
+
+      // Merge database configuration in file configuration
+      $sharer = array_merge($available_sharers[$sid], $sharer);
+
+      // Transform URL
+      _sharer_toolbar_generate_sharer_url($sharer['url'], $variables);
+
+      // Generate button
+      $sharing_buttons[] = l('Partager sur ' . $sharer['name'], $sharer['url']);
+    }
+  }
+
+  // Render HTML for sharer toolbar
+  $variables['sharer_toolbar'] = theme('sharer_toolbar', array(
+    'sharing_buttons' => $sharing_buttons,
+  ));
 }

@@ -34,9 +34,11 @@ function sharer_toolbar_config_form($form, &$form_state) {
     );
 
     // Textfield to hold sharer icon class.
+    $icon_value = (isset($sharer_conf['icon_class'])) ? $sharer_conf['icon_class'] : $sharer['icon_class'];
     $form['sharers'][$sid]['icon_class'] = array(
       '#type' => 'textfield',
-      '#default_value' => (isset($sharer_conf['icon_class'])) ? $sharer_conf['icon_class'] : $sharer['icon_class'],
+      '#default_value' => $icon_value,
+      '#field_prefix' => '<i class="' . $icon_value . '"></i>',
     );
 
     // Invisible field, but contains sort info (weights).
