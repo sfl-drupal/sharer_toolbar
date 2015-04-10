@@ -1,4 +1,4 @@
 Sharer toolbar
 ==============
 
-Provide several social «sharers», from Facebook, Twitter, LinkedIn and email sharing.
+Provide several social «sharers» from Facebook, Twitter, LinkedIn and email sharing.
