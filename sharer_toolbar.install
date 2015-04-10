@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file sharer_toolbar.install
+ * Installation file.
+ */
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function sharer_toolbar_uninstall() {
+
+  // Delete sharers configuration
+  variable_del('sharer_toolbar_sharers_configuration');
+
+  // Delete sharers order
+  variable_del('sharer_toolbar_sharers_order');
+}

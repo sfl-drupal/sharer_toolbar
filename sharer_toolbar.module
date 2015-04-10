@@ -4,3 +4,85 @@
  * @file sharer_toolbar.module
  * Hooks implementations and code logic related to Sharer Toolbar module
  */
+
+
+/**
+ * Implements hook_permission().
+ */
+function sharer_toolbar_permission() {
+  return array(
+    'admin sharer toolbar' => array(
+      'title' => t('Administer sharer toolbar'),
+      'description' => t('Choose which social sharer to be displayed and other stuffs.'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_menu().
+ */
+function sharer_toolbar_menu() {
+  return array(
+    'admin/config/services/social-sharer-toolbar' => array(
+      'title' => 'Sharer toolbar configuration',
+      'description' => 'Configure sharer toolbar.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('sharer_toolbar_config_form'),
+      'access arguments' => array('admin sharer toolbar'),
+      'file' => 'sharer_toolbar.forms.inc',
+    )
+  );
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function sharer_toolbar_theme($existing, $type, $theme, $path) {
+  return array(
+    'sharer_toolbar_config_form' => array(
+      'render element' => 'form',
+      'file' => 'sharer_toolbar.theme.inc',
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_sharer_toolbar_available_sharer().
+ */
+function sharer_toolbar_sharer_toolbar_available_sharer() {
+
+  // Define default sharers
+  return array(
+
+    // Facebook sharer
+    'facebook' => array(
+      'sid' => 'facebook',
+      'name' => 'Facebook',
+      'icon_class' => 'icon-facebook',
+    ),
+
+    // Twitter sharer
+    'twitter' => array(
+      'sid' => 'twitter',
+      'name' => 'Twitter',
+      'icon_class' => 'icon-twitter',
+    ),
+
+    // Twitter sharer
+    'linkedin' => array(
+      'sid' => 'linkedin',
+      'name' => 'LinkedIn',
+      'icon_class' => 'icon-linkedin',
+    ),
+
+    // Email sharer
+    'email' => array(
+      'sid' => 'email',
+      'name' => 'Email',
+      'icon_class' => 'icon-email',
+    ),
+  );
+}

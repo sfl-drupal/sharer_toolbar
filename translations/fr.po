@@ -1,0 +1,22 @@
+# French translation of Sharer Toolbar module
+# Copyright (c) 2015 by Savoir-faire Linux
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Sharer Toolbar 7.x-1.0"
+"POT-Creation-Date: 2015-04-10 12:00+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+
+msgid "Sharer toolbar configuration"
+msgstr "Configuration de la barre de partage"
+
+msgid "Configure sharer toolbar."
+msgstr "Configurer la barre de partage"
+
+msgid "Sharer toolbar configuration has been saved."
+msgstr "La configuration de la barre de partage a été sauvegardée."
