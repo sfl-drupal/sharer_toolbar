@@ -71,7 +71,7 @@ function _sharer_toolbar_generate_sharer_url(&$sharer_url, $variables) {
 
   // URL replacement
   $node_url = url('node/' . $variables['nid'], array(
-    'language' => $variables['language'],
+    'language' => (object) array('language' => $variables['language']),
   ));
   $sharer_url = str_replace('[:shared_url:]', $base_url . $node_url, $sharer_url);
 
