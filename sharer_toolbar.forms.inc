@@ -70,22 +70,34 @@ function sharer_toolbar_config_form($form, &$form_state) {
  * Sharer toolbar configuration form submit.
  */
 function sharer_toolbar_config_form_submit($form, &$form_state) {
-  $sharers = $form_state['values']['sharers'];
   $sharers_order = array();
   $sharers_configuration = array();
 
+  // Get available sharers and submitted values to compare them
+  $available_sharers = _sharer_toolbar_get_available_sharers();
+  $submitted_sharers = $form_state['values']['sharers'];
+
   // Iterate on orders to store informations
-  foreach ($sharers as $sid => $sharer_conf) {
+  foreach ($submitted_sharers as $sid => $submitted_sharer) {
 
     // Store weight
-    $sharers_order[$sharer_conf['weight']] = $sid;
+    $sharers_order[$submitted_sharer['weight']] = $sid;
 
-    // Store configuration
+    // Store status
     $sharers_configuration[$sid] = array(
-      'name' => $sharer_conf['name'],
-      'icon_class' => $sharer_conf['icon_class'],
-      'status' => $sharer_conf['status'],
+      'status' => $submitted_sharer['status'],
     );
+
+    // And store configuration if different from default
+    if ($submitted_sharer['name'] != $available_sharers[$sid]['name']) {
+      $sharers_configuration[$sid]['name'] = $submitted_sharer['name'];
+    }
+    if ($submitted_sharer['icon_class'] != $available_sharers[$sid]['icon_class']) {
+      $sharers_configuration[$sid]['icon_class'] = $submitted_sharer['icon_class'];
+    }
+    if ($submitted_sharer['label'] != $available_sharers[$sid]['label']) {
+      $sharers_configuration[$sid]['label'] = $submitted_sharer['label'];
+    }
   }
 
   // Save values

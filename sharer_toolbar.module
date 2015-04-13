@@ -92,7 +92,7 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'name' => 'Google +',
       'icon_class' => 'icon-googleplus',
       'url' => 'https://plus.google.com/share?url=[:shared_url:]',
-      'label' => 'Share on Google+',
+      'label' => 'Share on Google +',
     ),
 
     // Twitter sharer
@@ -117,9 +117,9 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
 
 
 /**
- * Implements hook_preprocess_node().
+ * Implements hook_process_node().
  */
-function sharer_toolbar_preprocess_node(&$variables) {
+function sharer_toolbar_process_node(&$variables) {
   module_load_include('inc', 'sharer_toolbar');
   $sharing_buttons = array();
 
@@ -131,20 +131,12 @@ function sharer_toolbar_preprocess_node(&$variables) {
   foreach ($active_sharers as $sid => &$sharer) {
     if ($sharer['status']) {
 
-      // Merge database configuration in file configuration
+      // Merge file configuration to complete database configuration
       $sharer = array_merge($available_sharers[$sid], $sharer);
 
       // Transform URL
       _sharer_toolbar_generate_sharer_url($sharer['url'], $variables);
 
-      // Generate button
-      // $ctnt =  . t($sharer['label']);
-      // $sharing_buttons[$sid] = l($ctnt, $sharer['url'], array(
-      //   'html' => TRUE,
-      //   'attributes' => array(
-      //     'title' => $sharer['label'],
-      //   ),
-      // ));
     }
 
     // or unset before sending array to template
