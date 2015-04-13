@@ -17,6 +17,7 @@ function theme_sharer_toolbar_config_form($variables) {
     t('Status'),
     t('Name'),
     t('Icon class'),
+    t('Label'),
     t('Weight'),
   );
 
@@ -30,6 +31,7 @@ function theme_sharer_toolbar_config_form($variables) {
         drupal_render($form['sharers'][$sid]['status']),
         drupal_render($form['sharers'][$sid]['name']),
         drupal_render($form['sharers'][$sid]['icon_class']),
+        drupal_render($form['sharers'][$sid]['label']),
         drupal_render($form['sharers'][$sid]['weight']),
       ),
       'class' => array('draggable'),

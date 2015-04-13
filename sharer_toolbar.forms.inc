@@ -41,6 +41,12 @@ function sharer_toolbar_config_form($form, &$form_state) {
       '#field_prefix' => '<i class="' . $icon_value . '"></i>',
     );
 
+    // Textfield to hold sharer label.
+    $form['sharers'][$sid]['label'] = array(
+      '#type' => 'textfield',
+      '#default_value' => (isset($sharer_conf['label'])) ? $sharer_conf['label'] : $sharer['label'],
+    );
+
     // Invisible field, but contains sort info (weights).
     $form['sharers'][$sid]['weight'] = array(
       '#type' => 'weight',

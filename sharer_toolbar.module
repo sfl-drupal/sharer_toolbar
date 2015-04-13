@@ -41,9 +41,20 @@ function sharer_toolbar_menu() {
  */
 function sharer_toolbar_theme($existing, $type, $theme, $path) {
   return array(
+
+    // Sharer toolbar config form
     'sharer_toolbar_config_form' => array(
       'render element' => 'form',
       'file' => 'sharer_toolbar.theme.inc',
+    ),
+
+    // Sharer toolbar template
+    'sharer_toolbar' => array(
+      'variables' => array(
+        'sharers' => array(),
+      ),
+      'template' => 'sharer-toolbar',
+      // 'path' => 'templates',
     ),
   );
 }
@@ -63,6 +74,7 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'name' => 'Facebook',
       'icon_class' => 'icon-facebook',
       'url' => 'https://www.facebook.com/sharer/sharer.php?u=[:shared_url:]',
+      'label' => 'Share on Facebook',
     ),
 
     // Twitter sharer
@@ -70,7 +82,8 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'sid' => 'twitter',
       'name' => 'Twitter',
       'icon_class' => 'icon-twitter',
-      'url' => 'https://twitter.com/home?status=[:shared_message:]',
+      'url' => 'https://twitter.com/home?status=[:shared_summary:] [:shared_url:]',
+      'label' => 'Share on Twitter',
     ),
 
     // Google Plus sharer
@@ -79,6 +92,7 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'name' => 'Google +',
       'icon_class' => 'icon-googleplus',
       'url' => 'https://plus.google.com/share?url=[:shared_url:]',
+      'label' => 'Share on Google+',
     ),
 
     // Twitter sharer
@@ -87,14 +101,17 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'name' => 'LinkedIn',
       'icon_class' => 'icon-linkedin',
       'url' => 'https://www.linkedin.com/shareArticle?mini=true&url=[:shared_url:]&title=[:shared_title:]&summary=[:shared_summary:]&source=[:shared_source:]',
+      'label' => 'Share on LinkedIn',
     ),
 
-    // // Email sharer
-    // 'email' => array(
-    //   'sid' => 'email',
-    //   'name' => 'Email',
-    //   'icon_class' => 'icon-email',
-    // ),
+    // Email sharer
+    'email' => array(
+      'sid' => 'email',
+      'name' => 'Email',
+      'icon_class' => 'icon-email',
+      'url' => 'mailto:?subject=[:shared_title:]&body=[:shared_url:]',
+      'label' => 'Share by email',
+    ),
   );
 }
 
@@ -105,7 +122,6 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
 function sharer_toolbar_preprocess_node(&$variables) {
   module_load_include('inc', 'sharer_toolbar');
   $sharing_buttons = array();
-  // dd($variables);
 
   // Get all active and available sharers
   $active_sharers = variable_get('sharer_toolbar_sharers_configuration', array());
@@ -122,12 +138,26 @@ function sharer_toolbar_preprocess_node(&$variables) {
       _sharer_toolbar_generate_sharer_url($sharer['url'], $variables);
 
       // Generate button
-      $sharing_buttons[] = l('Partager sur ' . $sharer['name'], $sharer['url']);
+      // $ctnt =  . t($sharer['label']);
+      // $sharing_buttons[$sid] = l($ctnt, $sharer['url'], array(
+      //   'html' => TRUE,
+      //   'attributes' => array(
+      //     'title' => $sharer['label'],
+      //   ),
+      // ));
+    }
+
+    // or unset before sending array to template
+    else {
+      unset($active_sharers[$sid]);
     }
   }
 
+  // Add javascript feature
+  drupal_add_js(drupal_get_path('module', 'sharer_toolbar') . '/js/sharer-opener.js');
+
   // Render HTML for sharer toolbar
   $variables['sharer_toolbar'] = theme('sharer_toolbar', array(
-    'sharing_buttons' => $sharing_buttons,
+    'sharers' => $active_sharers,
   ));
 }
