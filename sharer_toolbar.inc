@@ -67,13 +67,13 @@ function _sharer_toolbar_get_ordered_available_sharers() {
  * Replace tokens with correct value in pattern URL
  */
 function _sharer_toolbar_generate_sharer_url(&$sharer_url, $variables) {
-  global $base_url;
+  global $base_root;
 
   // URL replacement
   $node_url = url('node/' . $variables['nid'], array(
     'language' => (object) array('language' => $variables['language']),
   ));
-  $sharer_url = str_replace('[:shared_url:]', $base_url . $node_url, $sharer_url);
+  $sharer_url = str_replace('[:shared_url:]', $base_root . $node_url, $sharer_url);
 
   // Title replacement
   $sharer_url = str_replace('[:shared_title:]', $variables['title'], $sharer_url);
