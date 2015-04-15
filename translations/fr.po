@@ -26,3 +26,21 @@ msgstr "La configuration de la barre de partage a été sauvegardée."
 
 msgid "Icon class"
 msgstr "Classe de l'icône"
+
+msgid "Share"
+msgstr "Partager"
+
+msgid "Share on Facebook"
+msgstr "Partager sur Facebook"
+
+msgid "Share on Twitter"
+msgstr "Partager sur Twitter"
+
+msgid "Share on Share on Google +"
+msgstr "Partager sur Google +"
+
+msgid "Share on LinkedIn"
+msgstr "Partager sur LinkedIn"
+
+msgid "Share by email"
+msgstr "Partager par email"

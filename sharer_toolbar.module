@@ -149,7 +149,13 @@ function sharer_toolbar_process_node(&$variables) {
   drupal_add_js(drupal_get_path('module', 'sharer_toolbar') . '/js/sharer-opener.js');
 
   // Render HTML for sharer toolbar
-  $variables['sharer_toolbar'] = theme('sharer_toolbar', array(
-    'sharers' => $active_sharers,
-  ));
+  if (!empty($active_sharers)) {
+    $variables['sharer_toolbar'] = theme('sharer_toolbar', array(
+      'title' => variable_get('sharer_toolbar_title', t('Share')),
+      'sharers' => $active_sharers,
+    ));
+  }
+  else {
+    $variables['sharer_toolbar'] = NULL;
+  }
 }
