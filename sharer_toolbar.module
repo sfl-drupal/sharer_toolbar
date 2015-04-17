@@ -151,7 +151,7 @@ function sharer_toolbar_process_node(&$variables) {
   // Render HTML for sharer toolbar
   if (!empty($active_sharers)) {
     $variables['sharer_toolbar'] = theme('sharer_toolbar', array(
-      'title' => variable_get('sharer_toolbar_title', t('Share')),
+      'title' => variable_get('sharer_toolbar_title', 'Share'),
       'sharers' => $active_sharers,
     ));
   }

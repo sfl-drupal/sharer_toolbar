@@ -40,7 +40,13 @@ function theme_sharer_toolbar_config_form($variables) {
 
   // Render draggable table
   $output = drupal_render($form['note']);
-  $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'sharers-order')));
+  $output .= drupal_render($form['sharer_toolbar_title']);
+  $output .= drupal_render($form['sharers_order_title']);
+  $output .= theme('table', array(
+    'attributes' => array('id' => 'sharers-order'),
+    'header' => $header,
+    'rows' => $rows,
+  ));
   $output .= drupal_render_children($form);
 
   // Add draggable feature to table#sharers-order

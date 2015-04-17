@@ -11,8 +11,16 @@
 function sharer_toolbar_config_form($form, &$form_state) {
   module_load_include('inc', 'sharer_toolbar');
 
-  // To make checkboxes sortable
-  $form['#tree'] = TRUE;
+  // Sharer toolbar title
+  $form['sharer_toolbar_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Sharer toolbar title'),
+    '#description' => t('Set this value in english, and translate it using !link.', array('!link' => l(t('translatable strings'), 'admin/config/regional/translate/translate'))),
+    '#default_value' => variable_get('sharer_toolbar_title', 'Share'),
+  );
+
+  // Make sharers sortable
+  $form['sharers']['#tree'] = TRUE;
 
   // List all available sharers
   $sharers = _sharer_toolbar_get_ordered_available_sharers();
@@ -72,6 +80,9 @@ function sharer_toolbar_config_form($form, &$form_state) {
 function sharer_toolbar_config_form_submit($form, &$form_state) {
   $sharers_order = array();
   $sharers_configuration = array();
+
+  // Save sharer toolbar title
+  variable_set('sharer_toolbar_title', $form_state['values']['sharer_toolbar_title']);
 
   // Get available sharers and submitted values to compare them
   $available_sharers = _sharer_toolbar_get_available_sharers();

@@ -7,7 +7,7 @@
 
 ?>
 <div id="sharer-toolbar-container">
-  <div id="sharer-toolbar"><?php print $title; ?></div>
+  <div id="sharer-toolbar"><?php print t($title); ?></div>
   <ul id="sharer-toolbar">
     <?php foreach ($sharers as $sid => $sharer) : ?>
       <li class="shareLink__<?php print $sid; ?>">
