@@ -11,6 +11,10 @@
  */
 function sharer_toolbar_permission() {
   return array(
+    'access sharer toolbar' => array(
+      'title' => t('Access sharer toolbar'),
+      'description' => t('Choose who can acces sharers on front.'),
+    ),
     'admin sharer toolbar' => array(
       'title' => t('Administer sharer toolbar'),
       'description' => t('Choose which social sharer to be displayed and other stuffs.'),
@@ -120,42 +124,45 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
  * Implements hook_process_node().
  */
 function sharer_toolbar_process_node(&$variables) {
-  module_load_include('inc', 'sharer_toolbar');
-  $sharing_buttons = array();
 
-  // Get all active and available sharers
-  $active_sharers = variable_get('sharer_toolbar_sharers_configuration', array());
-  $available_sharers = _sharer_toolbar_get_available_sharers();
+  // Default value for sharer toolbar
+  $variables['sharer_toolbar'] = NULL;
 
-  // Generate button if sharer is active
-  foreach ($active_sharers as $sid => &$sharer) {
-    if ($sharer['status']) {
+  // Generate only if user can access it
+  if (user_access('access sharer toolbar')) {
+    module_load_include('inc', 'sharer_toolbar');
+    $sharing_buttons = array();
 
-      // Merge file configuration to complete database configuration
-      $sharer = array_merge($available_sharers[$sid], $sharer);
+    // Get all active and available sharers
+    $active_sharers = variable_get('sharer_toolbar_sharers_configuration', array());
+    $available_sharers = _sharer_toolbar_get_available_sharers();
 
-      // Transform URL
-      _sharer_toolbar_generate_sharer_url($sharer['url'], $variables);
+    // Generate button if sharer is active
+    foreach ($active_sharers as $sid => &$sharer) {
+      if ($sharer['status']) {
 
+        // Merge file configuration to complete database configuration
+        $sharer = array_merge($available_sharers[$sid], $sharer);
+
+        // Transform URL
+        _sharer_toolbar_generate_sharer_url($sharer['url'], $variables);
+      }
+
+      // or unset before sending array to template
+      else {
+        unset($active_sharers[$sid]);
+      }
     }
 
-    // or unset before sending array to template
-    else {
-      unset($active_sharers[$sid]);
+    // Add javascript feature
+    drupal_add_js(drupal_get_path('module', 'sharer_toolbar') . '/js/sharer-opener.js');
+
+    // Render HTML for sharer toolbar
+    if (!empty($active_sharers)) {
+      $variables['sharer_toolbar'] = theme('sharer_toolbar', array(
+        'title' => variable_get('sharer_toolbar_title', 'Share'),
+        'sharers' => $active_sharers,
+      ));
     }
-  }
-
-  // Add javascript feature
-  drupal_add_js(drupal_get_path('module', 'sharer_toolbar') . '/js/sharer-opener.js');
-
-  // Render HTML for sharer toolbar
-  if (!empty($active_sharers)) {
-    $variables['sharer_toolbar'] = theme('sharer_toolbar', array(
-      'title' => variable_get('sharer_toolbar_title', 'Share'),
-      'sharers' => $active_sharers,
-    ));
-  }
-  else {
-    $variables['sharer_toolbar'] = NULL;
   }
 }
