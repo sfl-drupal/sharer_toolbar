@@ -84,7 +84,13 @@ function _sharer_toolbar_generate_sharer_url(&$sharer_url, $variables) {
   // Summary replacement
   $truncate_summary = '';
   if (isset($variables['node']->field_catchline) && !empty($variables['node']->field_catchline)) {
-    $truncate_summary = truncate_utf8(drupal_html_to_text($variables['node']->field_catchline[LANGUAGE_NONE][0]['safe_value']), 200, TRUE, $add_ellipsis = TRUE);
+    if (isset($variables['node']->field_catchline[LANGUAGE_NONE])) {
+      $summary = $variables['node']->field_catchline[LANGUAGE_NONE][0]['safe_value'];
+    }
+    else {
+      $summary = $variables['node']->field_catchline[0]['safe_value'];
+    }
+    $truncate_summary = truncate_utf8(drupal_html_to_text($summary), 200, TRUE, $add_ellipsis = TRUE);
   }
   $sharer_url = str_replace('[:shared_summary:]', $truncate_summary, $sharer_url);
 }
