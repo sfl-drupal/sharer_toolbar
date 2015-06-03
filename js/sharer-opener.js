@@ -7,7 +7,7 @@
 (function ($) {
   Drupal.behaviors.sharerOpener = {
     attach: function (context, settings) {
-      $('#sharer-toolbar-list', context).find('.shareLink__link').click(function () {
+      $('.sharer-toolbar-list', context).find('.shareLink__link').click(function () {
 
         // Parse URL to get protocol
         var parser = document.createElement('a');

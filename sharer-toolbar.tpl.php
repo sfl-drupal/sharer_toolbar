@@ -6,9 +6,9 @@
  */
 
 ?>
-<div id="sharer-toolbar-container" class="shareLink">
-  <button id="sharer-toolbar-btn" class="shareLink__trigger"><?php print t($title); ?></button>
-  <ul id="sharer-toolbar-list"  class="shareLink__list">
+<div class="sharer-toolbar-container shareLink">
+  <button class="sharer-toolbar-btn shareLink__trigger"><?php print t($title); ?></button>
+  <ul class="sharer-toolbar-list shareLink__list">
     <?php foreach ($sharers as $sid => $sharer) : ?>
       <li class="shareLink__item shareLink__item--<?php print $sid; ?>">
         <a class="shareLink__link shareLink__link--<?php print $sid; ?>" href="<?php print $sharer['url']; ?>" data-title="<?php print t($sharer['label']); ?>">
