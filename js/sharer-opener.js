@@ -7,7 +7,7 @@
 (function ($) {
   Drupal.behaviors.sharerOpener = {
     attach: function (context, settings) {
-      $('#sharer-toolbar a', context).click(function () {
+      $('#sharer-toolbar-list', context).find('.shareLink__link').click(function () {
 
         // Parse URL to get protocol
         var parser = document.createElement('a');
@@ -15,7 +15,7 @@
 
         // Open popup if protocol is different from «mailto»
         if (parser.protocol !== 'mailto:') {
-          window.open($(this).attr('href'), $(this).attr('title'), "width=640, height=480");
+          window.open($(this).attr('href'), $(this).data('title'), "width=640, height=480");
           return false;
         }
       });
