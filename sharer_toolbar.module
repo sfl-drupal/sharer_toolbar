@@ -104,7 +104,7 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'sid' => 'linkedin',
       'name' => 'LinkedIn',
       'icon_class' => 'icon-linkedin',
-      'url' => 'https://www.linkedin.com/shareArticle?mini=true&url=[:shared_url:]&title=[:shared_title:]&summary=[:shared_summary:]&source=[:shared_source:]',
+      'url' => 'https://www.linkedin.com/shareArticle?mini=true&amp;url=[:shared_url:]&amp;title=[:shared_title:]&amp;summary=[:shared_summary:]&amp;source=[:shared_source:]',
       'label' => 'Share on LinkedIn',
     ),
 
@@ -113,7 +113,7 @@ function sharer_toolbar_sharer_toolbar_available_sharer() {
       'sid' => 'email',
       'name' => 'Email',
       'icon_class' => 'icon-email',
-      'url' => 'mailto:?subject=[:shared_title:]&body=[:shared_url:]',
+      'url' => 'mailto:?subject=[:shared_title:]&amp;body=[:shared_url:]',
       'label' => 'Share by email',
     ),
   );

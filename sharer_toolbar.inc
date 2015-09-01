@@ -93,4 +93,7 @@ function _sharer_toolbar_generate_sharer_url(&$sharer_url, $variables) {
     $truncate_summary = truncate_utf8(drupal_html_to_text($summary), 200, TRUE, $add_ellipsis = TRUE);
   }
   $sharer_url = str_replace('[:shared_summary:]', $truncate_summary, $sharer_url);
+
+  // Replace spaces by %20 to be consistent with w3c
+  $sharer_url = str_replace(' ', '%20', $sharer_url);
 }
