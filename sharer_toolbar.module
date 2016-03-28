@@ -134,15 +134,13 @@ function sharer_toolbar_process_node(&$variables) {
     $sharing_buttons = array();
 
     // Get all active and available sharers
+    $ordered_sharers = _sharer_toolbar_get_ordered_available_sharers();
     $active_sharers = variable_get('sharer_toolbar_sharers_configuration', array());
-    $available_sharers = _sharer_toolbar_get_available_sharers();
 
     // Generate button if sharer is active
-    foreach ($active_sharers as $sid => &$sharer) {
-      if ($sharer['status']) {
-
-        // Merge file configuration to complete database configuration
-        $sharer = array_merge($available_sharers[$sid], $sharer);
+    foreach ($ordered_sharers as $delta => &$sharer) {
+      $sid = $sharer['sid'];
+      if ($active_sharers[$sid]['status']) {
 
         // Transform URL
         _sharer_toolbar_generate_sharer_url($sharer['url'], $variables);
@@ -150,7 +148,7 @@ function sharer_toolbar_process_node(&$variables) {
 
       // or unset before sending array to template
       else {
-        unset($active_sharers[$sid]);
+        unset($ordered_sharers[$delta]);
       }
     }
 
@@ -158,10 +156,10 @@ function sharer_toolbar_process_node(&$variables) {
     drupal_add_js(drupal_get_path('module', 'sharer_toolbar') . '/js/sharer-opener.js');
 
     // Render HTML for sharer toolbar
-    if (!empty($active_sharers)) {
+    if (!empty($ordered_sharers)) {
       $variables['sharer_toolbar'] = theme('sharer_toolbar', array(
         'title' => variable_get('sharer_toolbar_title', 'Share'),
-        'sharers' => $active_sharers,
+        'sharers' => $ordered_sharers,
       ));
     }
   }
